@@ -8,11 +8,12 @@
 # Command: bash run_scripts/muge_finetune_vit-b-16_rbt-base.sh ${DATAPATH}
 
 # Number of GPUs per GPU worker
-GPUS_PER_NODE=8 
+GPUS_PER_NODE=4
 # Number of GPU workers, for single-worker training, please set to 1
 WORKER_CNT=1
 # The ip address of the rank-0 worker, for single-worker training, please set to localhost
-export MASTER_ADDR=XX.XX.XX.XX
+# export MASTER_ADDR=XX.XX.XX.XX
+export MASTER_ADDR=localhost
 # The port for communication
 export MASTER_PORT=8514
 # The rank of this worker, should be in {0, ..., WORKER_CNT-1}, for single-worker training, please set to 0
@@ -44,8 +45,8 @@ report_training_batch_acc="--report-training-batch-acc"
 # training hyper-params
 context_length=52
 warmup=100
-batch_size=128
-valid_batch_size=128
+batch_size=12
+valid_batch_size=12
 accum_freq=1
 lr=5e-5
 wd=0.001
@@ -57,6 +58,7 @@ text_model=RoBERTa-wwm-ext-base-chinese
 use_augment="--use-augment"
 # use_augment=""
 
+# CUDA_VISIBLE_DEVICES=2,3,4,7
 python3 -m torch.distributed.launch --use_env --nproc_per_node=${GPUS_PER_NODE} --nnodes=${WORKER_CNT} --node_rank=${RANK} \
           --master_addr=${MASTER_ADDR} --master_port=${MASTER_PORT} cn_clip/training/main.py \
           --train-data=${train_data} \
@@ -82,4 +84,5 @@ python3 -m torch.distributed.launch --use_env --nproc_per_node=${GPUS_PER_NODE} 
           --max-epochs=${max_epochs} \
           --vision-model=${vision_model} \
           ${use_augment} \
-          --text-model=${text_model}
+          --text-model=${text_model} \
+          --grad-checkpointing
