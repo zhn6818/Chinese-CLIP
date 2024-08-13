@@ -1,0 +1,50 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "train",
+            "type": "python",
+            "request": "launch",
+            "program": "/root/anaconda3/envs/pytorch/lib/python3.8/site-packages/torch/distributed/launch.py",
+            "args": [
+                "--use_env",
+                "--nproc_per_node=4",
+                "--nnodes=1",
+                "--node_rank=0",
+                "--master_addr=localhost",
+                "--master_port=8514",
+                "cn_clip/training/main.py",
+                "--train-data=/data1/zhn/macdata/code/github/python/modelData/datasets/MUGE/lmdb/train",
+                "--val-data=/data1/zhn/macdata/code/github/python/modelData/datasets/MUGE/lmdb/valid",
+                "--resume=/data1/zhn/macdata/code/github/python/modelData/pretrained_weights/clip_cn_vit-b-16.pt",
+                "--reset-data-offset",
+                "--reset-optimizer",
+                "--logs=/data1/zhn/macdata/code/github/python/modelData/experiments/",
+                "--name=muge_finetune_vit-b-16_roberta-base_bs128_8gpu",
+                "--save-step-frequency=999999",
+                "--save-epoch-frequency=1",
+                "--log-interval=1",
+                "--report-training-batch-acc",
+                "--context-length=52",
+                "--warmup=100",
+                "--batch-size=32",
+                "--valid-batch-size=32",
+                "--valid-step-interval=150",
+                "--valid-epoch-interval=1",
+                "--accum-freq=1",
+                "--lr=5e-5",
+                "--wd=0.001",
+                "--max-epochs=3",
+                "--vision-model=ViT-B-16",
+                "--use-augment",
+                "--text-model=RoBERTa-wwm-ext-base-chinese",
+                "--grad-checkpointing",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

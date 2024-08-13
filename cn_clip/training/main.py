@@ -13,6 +13,9 @@ import torch.distributed as dist
 import torch.backends.cudnn as cudnn
 from torch.cuda.amp import GradScaler
 
+import sys
+sys.path.append("/data1/zhn/macdata/code/github/python/Chinese-CLIP/")
+
 from cn_clip.clip import load
 from cn_clip.clip.model import convert_weights, convert_state_dict, resize_pos_embed, CLIP
 from cn_clip.training.train import train, evaluate

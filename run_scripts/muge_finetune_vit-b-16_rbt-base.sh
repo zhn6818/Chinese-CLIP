@@ -28,7 +28,9 @@ train_data=${DATAPATH}/datasets/MUGE/lmdb/train
 val_data=${DATAPATH}/datasets/MUGE/lmdb/valid # if val_data is not specified, the validation will be automatically disabled
 
 # restore options
-resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt # or specify your customed ckpt path to resume
+# resume=${DATAPATH}/pretrained_weights/clip_cn_vit-b-16.pt # or specify your customed ckpt path to resume
+resume=${DATAPATH}/experiments/muge_finetune_vit-b-16_roberta-base_bs128_8gpu/checkpoints/epoch3.pt # or specify your customed ckpt path to resume
+
 reset_data_offset="--reset-data-offset"
 reset_optimizer="--reset-optimizer"
 # reset_optimizer=""
@@ -45,8 +47,8 @@ report_training_batch_acc="--report-training-batch-acc"
 # training hyper-params
 context_length=52
 warmup=100
-batch_size=12
-valid_batch_size=12
+batch_size=32
+valid_batch_size=32
 accum_freq=1
 lr=5e-5
 wd=0.001
