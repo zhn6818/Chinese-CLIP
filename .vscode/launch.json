@@ -13,6 +13,26 @@
             "justMyCode": true
         },
         {
+            "name": "Python: extract feature",
+            "type": "python",
+            "request": "launch",
+            "program": "cn_clip/eval/extract_features.py",
+            "args": [
+                "--extract-image-feats",
+                "--extract-text-feats",
+                "--image-data=/data1/zhn/macdata/code/github/python/modelData/datasets/MUGE/lmdb/test/imgs",
+                "--text-data=/data1/zhn/macdata/code/github/python/modelData/datasets/MUGE/test_texts.jsonl",
+                "--img-batch-size=32",
+                "--text-batch-size=32",
+                "--context-length=52",
+                "--resume=/data1/zhn/macdata/code/github/python/modelData/experiments/muge_finetune_vit-b-16_roberta-base_bs128_8gpu/checkpoints/epoch3.pt",
+                "--vision-model=ViT-B-16",
+                "--text-model=RoBERTa-wwm-ext-base-chinese"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "train",
             "type": "python",
             "request": "launch",
