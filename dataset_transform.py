@@ -5,15 +5,19 @@ import json
 from PIL import Image
 from io import BytesIO
 from sklearn.model_selection import train_test_split
+import chardet
 
 '''
 original_dataset原始数据的路径文件夹，需修改为实际的路径
 '''
 
+with open('/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/image.csv', 'rb') as f:
+    result = chardet.detect(f.read())
+    print(result)
 #训练和验证集文本数据的文件
-data1 = pd.read_csv('original_dataset/data1/ImageWordData.csv')
+data1 = pd.read_csv('/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/image.csv', encoding=result['encoding'])
 #训练和验证集图像数据的目录
-data1_images_folder='original_dataset/data1/ImageData'
+data1_images_folder='/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/images'
 
 # 先将文本及对应图像id划分划分训练集和验证集
 train_data, val_data = train_test_split(data1, test_size=0.2, random_state=42)
@@ -35,12 +39,12 @@ def process_train_valid(data, images_folder, img_file, txt_file):
 
             # 文本内容和图片id需要被写入jsonl文件
             text_data = {"text_id": row["image_id"], "text": row["caption"], "image_ids": [row["image_id"]]}
-            f_txt.write(json.dumps(text_data) + '\n')
+            f_txt.write(json.dumps(text_data, ensure_ascii=False) + '\n')
 
 # 处理训练集和验证集
 # datasets/DatasetName为在Chinese-CLIP项目目录下新建的存放转换后数据集的文件夹
-process_train_valid(train_data, data1_images_folder, 'Chinese-CLIP/datasets/DatasetName/train_imgs.tsv', 'Chinese-CLIP/datasets/DatasetName/train_texts.jsonl')
-process_train_valid(val_data, data1_images_folder, 'Chinese-CLIP/datasets/DatasetName/valid_imgs.tsv', 'Chinese-CLIP/datasets/DatasetName/valid_texts.jsonl')
+process_train_valid(train_data, data1_images_folder, '/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/train_imgs.tsv', '/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/train_texts.jsonl')
+process_train_valid(val_data, data1_images_folder, '/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/valid_imgs.tsv', '/data1/zhn/macdata/code/github/python/modelData/datasets/myowndata/valid_texts.jsonl')
 
 
 
