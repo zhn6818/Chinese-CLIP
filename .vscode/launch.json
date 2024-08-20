@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Python: 当前文件",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
@@ -14,7 +14,7 @@
         },
         {
             "name": "Python: extract feature",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "cn_clip/eval/extract_features.py",
             "args": [
@@ -34,7 +34,7 @@
         },
         {
             "name": "train",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "/root/anaconda3/envs/pytorch/lib/python3.8/site-packages/torch/distributed/launch.py",
             "args": [
